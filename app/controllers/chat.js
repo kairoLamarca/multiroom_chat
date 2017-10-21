@@ -12,11 +12,11 @@ module.exports.iniciaChat = function (application, req, res) {
         return;
     }
 
-    //io é uma varia global criada no app.js usando o set
-    application.get('io').emit(
+    //io é uma variavel global criada no app.js usando o set
+    application.get('io').emit(//Pedido para executar alguma ação
         'msgParaCliente', 
         {apelido: dadosForm.apelido, mensagem: ' acabou de entrar no chat'}
     );
 
-    res.render('chat');
+    res.render('chat', { dadosForm: dadosForm });
 }

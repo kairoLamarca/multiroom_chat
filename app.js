@@ -18,4 +18,17 @@ io.on('connection', (socket) => {//evento pré definido no socket.io, executa qu
         console.log('Usuário desconectou');
     });
 
+    socket.on('msgParaServidor', (data) => {
+        socket.emit(//vai para o proprio usuario
+            'msgParaCliente',
+            { apelido: data.apelido, mensagem: data.mensagem }
+        );
+        
+        //broadcast faz o emit para todos os usuarios conectados
+        socket.broadcast.emit(
+            'msgParaCliente',
+            { apelido: data.apelido, mensagem: data.mensagem }
+        );
+    });
+
 })
