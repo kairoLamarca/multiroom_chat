@@ -111,6 +111,7 @@
 			var socket = io('http://localhost');
 
 			$('#enviar_mensagem').click(function(){
+				//Envia msg para o servidor (cliente -> servidor)
 				socket.emit(
 					'msgParaServidor',
 					{ 
@@ -124,6 +125,7 @@
 				$('#apelido_atualizado_nos_clientes').val(1);
 			})
 
+			//Recebe msg do servidor (servidor -> cliente)
 			socket.on('msgParaCliente', (data) =>{ 
 				var html = ''
 
@@ -137,6 +139,7 @@
 				window.scrollTo(0, document.body.scrollHeight);
 			});
 
+			//Recebe msg do servidor (servidor -> cliente)
 			socket.on('participantesParaCliente', (data) =>{ 
 				var html = ''
 

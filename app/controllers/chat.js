@@ -13,6 +13,7 @@ module.exports.iniciaChat = function (application, req, res) {
     }
 
     //io é uma variavel global criada no app.js usando o set
+    //Envia msg para o cliente (servidor -> cliente)
     application.get('io').emit(//Pedido para executar alguma ação
         'msgParaCliente', 
         {apelido: dadosForm.apelido, mensagem: ' acabou de entrar no chat'}

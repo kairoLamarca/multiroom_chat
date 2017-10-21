@@ -18,15 +18,18 @@ io.on('connection', (socket) => {//evento pré definido no socket.io, executa qu
         console.log('Usuário desconectou');
     });
 
+    //Recebe msg do cliente (cliente -> servidor)
     socket.on('msgParaServidor', (data) => {
 
         //Dialogos
+        //Envia msg para o cliente (servidor -> cliente)
         socket.emit(//vai para o proprio usuario
             'msgParaCliente',
             { apelido: data.apelido, mensagem: data.mensagem }
         );
         
         //broadcast faz o emit para todos os usuarios conectados
+        //Envia msg para todos os clientes (servidor -> cliente)
         socket.broadcast.emit(
             'msgParaCliente',
             { apelido: data.apelido, mensagem: data.mensagem }
@@ -34,12 +37,14 @@ io.on('connection', (socket) => {//evento pré definido no socket.io, executa qu
 
         //Participantes
         if(parseInt(data.apelido_atualizado_nos_clientes) == 0){
+            //Envia msg para o cliente (servidor -> cliente)
             socket.emit(//vai para o proprio usuario
                 'participantesParaCliente',
                 { apelido: data.apelido }
             );
             
             //broadcast faz o emit para todos os usuarios conectados
+            //Envia msg para todos os clientes (servidor -> cliente)
             socket.broadcast.emit(
                 'participantesParaCliente',
                 { apelido: data.apelido }
