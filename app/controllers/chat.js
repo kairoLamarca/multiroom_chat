@@ -1,5 +1,5 @@
-module.exports.iniciaChat = function(application, req, res){
-    
+module.exports.iniciaChat = function (application, req, res) {
+
     let dadosForm = req.body;
 
     req.assert('apelido', 'Nome ou apelido é obrigatório').notEmpty();
@@ -7,10 +7,16 @@ module.exports.iniciaChat = function(application, req, res){
 
     let erros = req.validationErrors();
 
-    if(erros){
-        res.render('index', {validacao: erros});
+    if (erros) {
+        res.render('index', { validacao: erros });
         return;
     }
-    
+
+    //io é uma varia global criada no app.js usando o set
+    application.get('io').emit(
+        'msgParaCliente', 
+        {apelido: dadosForm.apelido, mensagem: ' acabou de entrar no chat'}
+    );
+
     res.render('chat');
 }
