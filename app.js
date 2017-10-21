@@ -19,6 +19,8 @@ io.on('connection', (socket) => {//evento pré definido no socket.io, executa qu
     });
 
     socket.on('msgParaServidor', (data) => {
+
+        //Dialogos
         socket.emit(//vai para o proprio usuario
             'msgParaCliente',
             { apelido: data.apelido, mensagem: data.mensagem }
@@ -29,6 +31,21 @@ io.on('connection', (socket) => {//evento pré definido no socket.io, executa qu
             'msgParaCliente',
             { apelido: data.apelido, mensagem: data.mensagem }
         );
+
+        //Participantes
+        if(parseInt(data.apelido_atualizado_nos_clientes) == 0){
+            socket.emit(//vai para o proprio usuario
+                'participantesParaCliente',
+                { apelido: data.apelido }
+            );
+            
+            //broadcast faz o emit para todos os usuarios conectados
+            socket.broadcast.emit(
+                'participantesParaCliente',
+                { apelido: data.apelido }
+            );
+        }
+
     });
 
 })
